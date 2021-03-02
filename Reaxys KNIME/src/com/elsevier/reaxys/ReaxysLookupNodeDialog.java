@@ -714,6 +714,7 @@ public class ReaxysLookupNodeDialog extends DefaultNodeSettingsPane implements A
 		m.add(makeSubnodes("TARGET"));
 		m.add(makeSubnodes("SUBUNIT"));
 		m.add(makeSubnodes("TOVERW"));
+		m.add(makeSubnodes("DATIDS"));
 		top.add(m);
 
 		

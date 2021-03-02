@@ -22,7 +22,7 @@ import java.util.jar.Manifest;
  */
 public final class ReaxysDefs {
 	
-	private static final String UNKNOWN = "18 August 2020 14:08EDT";
+	private static final String UNKNOWN = "02 March 2021 16:15 CET";
 
 
 	/**

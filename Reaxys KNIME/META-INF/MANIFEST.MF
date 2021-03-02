@@ -17,6 +17,6 @@ Export-Package: com.elsevier.reaxys;x-internal:=true;
    org.knime.core.data,
    org.knime.core.node,
    javax.swing"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: bin/
 

@@ -63,7 +63,7 @@ public class RetrieveResults extends ReaxysDocument {
 	/*
 	 * top level data types; parents of all other data types
 	 */
-	final String[] topLevel = {"RX", "RY", "IDE", "CIT", "DAT", "TARGET", "SUPL"};
+	final String[] topLevel = {"RX", "RY", "IDE", "CIT", "DAT", "TARGET", "SUPL", "DATIDS"};
 
 	/*
 	 * cache in an attempt to reduce memory by canonicalizing strings.

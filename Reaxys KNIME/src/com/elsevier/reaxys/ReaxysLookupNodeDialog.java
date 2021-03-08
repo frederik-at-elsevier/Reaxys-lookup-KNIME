@@ -715,6 +715,8 @@ public class ReaxysLookupNodeDialog extends DefaultNodeSettingsPane implements A
 		m.add(makeSubnodes("SUBUNIT"));
 		m.add(makeSubnodes("TOVERW"));
 		m.add(makeSubnodes("DATIDS"));
+		m.add(makeSubnodesNonDataType("CONCOM", "Concomitants"));
+		m.add(makeSubnodesNonDataType("METABS", "Metabolites"));
 		top.add(m);
 
 		
@@ -763,6 +765,21 @@ public class ReaxysLookupNodeDialog extends DefaultNodeSettingsPane implements A
 	private Node makeSubnodes(String code) {
 		
 		String topName = ReaxysDataTypes.getByCode(code).getDescription();
+		Node result = makeSubnodesNonDataType(code, topName);
+		
+		return result;
+		
+	}
+	
+	/**
+	 * create a subtree for this class of fields, in case it is not a data type.
+	 * @param code code for class, e.g. "IDE"
+	 * @param typeDescription String describing the data type
+	 * @return tree witn fields from that node
+	 */
+	private Node makeSubnodesNonDataType(String code, String typeDescription) {
+		
+		String topName = typeDescription;
 		Node result = new Node(topName);
 		
 		for (String field : ReaxysFieldTypes.getLabelsForClass(code + ".")) {
@@ -772,7 +789,6 @@ public class ReaxysLookupNodeDialog extends DefaultNodeSettingsPane implements A
 		return result;
 		
 	}
-	
 
 	/**
 	 * handle value change and put item on the clipboard

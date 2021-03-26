@@ -153,7 +153,7 @@ public class ReaxysLookupNodeModel extends NodeModelUtilities{
 			int inputRowCount = 0;
 			int outputRowCount = 0;
 			
-			final int totalRows = inputData.getRowCount();
+			final long totalRows = inputData.size();
 
 			if (totalRows == 0) {
 				logger.info("Reaxys: no input queries");

@@ -541,6 +541,7 @@ public enum ReaxysFieldTypes {
 	RXD_LCN ("Location", "RXD.LCN"),
 	RXD_TAG ("Tag Location", "RXD.TAG"),
 	RXD_COM ("Comment", "RXD.COM"),
+	RXD_HAS_EXP ("Reaction detail has experimental procedure", "RXD.HAS_EXP_PROC"),
 	DEN_DEN ("Density", "DEN.DEN"),
 	DEN_L ("Citation Pointer", "DEN.L"),
 	DEN_SOURCE ("Source", "DEN.SOURCE"),

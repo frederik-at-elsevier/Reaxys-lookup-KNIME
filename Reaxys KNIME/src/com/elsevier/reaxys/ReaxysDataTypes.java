@@ -185,9 +185,7 @@ public enum ReaxysDataTypes {
     SA_SUPL ("SigmaAldrich supplier", "SUPL", "S", "SA", null),
 	EM ("E-molecules", "IDE", "S", "EM", new String[] {"IDE"}),
 	EM_YY ("E-molecules (incl. structures)", "IDE", "S", "EM", new String[] {"IDE", "YY"}),
-	SUPL ("E-molecules supplier", "SUPL", "S", "EM", null),
-	LN ("LabNetworks", "IDE", "S", "LN", new String[] {"IDE"}),
-    LN_SUPL ("LabNetworks supplier", "SUPL", "S", "LN", null);
+	SUPL ("E-molecules supplier", "SUPL", "S", "EM", null);
 
 	private String description;
 	private String code;

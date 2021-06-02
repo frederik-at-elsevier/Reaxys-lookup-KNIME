@@ -186,7 +186,7 @@ public class RetrieveResults extends ReaxysDocument {
 	 * @param option - extra option for query
 	 * @return Document with query to retrieve values.
 	 */
-	public Document retrieveValues(final String value,
+	public Document retrieveValues(final String value, ReaxysDataTypes type,
 			final int first, final int last) {
 
 		assert  (last - first) < 100: "Number of values requested greater than 100";
@@ -218,7 +218,7 @@ public class RetrieveResults extends ReaxysDocument {
 			// get associated field groups from enumeration.  This will
 			// often be the parent fields of the requested data, sometimes
 			// sibling fields.
-			final ReaxysDataTypes rdt = ReaxysDataTypes.getByName(prefix);
+			final ReaxysDataTypes rdt = ReaxysDataTypes.getByCodeAndDatabase(prefix, type.getDatabase());
 			
 			String[] extra = null;
 			if (rdt != null ) {

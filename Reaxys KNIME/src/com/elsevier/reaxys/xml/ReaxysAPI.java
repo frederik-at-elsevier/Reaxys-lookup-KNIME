@@ -360,7 +360,7 @@ public class ReaxysAPI {
 				
 				if (exec != null) exec.getProgressMonitor().setProgress(msg1);
 
-				final Document request = retrieveResults.retrieveValues(queryRange, i, 
+				final Document request = retrieveResults.retrieveValues(queryRange, dataType, i,
 						i + RESULT_INCREMENT - 1);
 				
 				// increment start value by RESULT_CHUNK
@@ -520,7 +520,7 @@ public class ReaxysAPI {
 				counter++;
 				if (exec != null) exec.getProgressMonitor().setProgress(msg1);
 
-				final Document request = retrieveResults.retrieveValues(queryRange, i, 
+				final Document request = retrieveResults.retrieveValues(queryRange, dataType, i, 
 						i + SAMPLE_SIZE - 1);
 				
 				final Document resultDocument = reaxysDocumentFactory.request(request);

@@ -174,16 +174,17 @@ public enum ReaxysDataTypes {
 	UV ("UV/VIS Spectroscopy", "UV", "S", "RX", new String[] {"IDE"}),
 	VP ("Vapour Pressure", "VP", "S", "RX", new String[] {"IDE"}),
     RC ("Commercial Substances", "IDE", "S", "RC", new String[] {"IDE"}),
+    RC_YY ("Commercial Substances (incl. structures)", "IDE", "S", "RC", new String[] {"IDE", "YY"}),
     PROD ("Commercial Substances Supplier Information", "PROD", "S", "RC", new String[] {"IDE"}),
 	SNR ("Commercial Substances Supplier Number", "SNR", "S", "RC", new String[] {"PROD", "IDE"}),
-	RC_FA ("Commercial Substances Field Availability", "FA", "S", "RC", null),
 	ZIT ("Supplier/vendor", "ZIT", "S", "RX", new String[] {"IDE"}),
-	PC ("PubChem", "IDE", "S", "PU", new String[] {"IDE", "YY"}),
-	PC_FA ("PubChem Field Availability", "FA", "S", "PU", null),
-    SA ("SigmaAldrich", "IDE", "S", "SA", new String[] {"IDE", "YY"}),
+	PC ("PubChem", "IDE", "S", "PU", new String[] {"IDE"}),
+	PC_YY ("PubChem (incl. structures)", "IDE", "S", "PU", new String[] {"IDE", "YY"}),
+    SA ("SigmaAldrich", "IDE", "S", "SA", new String[] {"IDE"}),
+    SA_YY ("SigmaAldrich (incl. structures)", "IDE", "S", "SA", new String[] {"IDE", "YY"}),
     SA_SUPL ("SigmaAldrich supplier", "SUPL", "S", "SA", null),
-	SA_FA ("SigmaAldrich Field Availability", "FA", "S", "SA", null),
 	EM ("E-molecules", "IDE", "S", "EM", new String[] {"IDE"}),
+	EM_YY ("E-molecules (incl. structures)", "IDE", "S", "EM", new String[] {"IDE", "YY"}),
 	SUPL ("E-molecules supplier", "SUPL", "S", "EM", null),
 	LN ("LabNetworks", "IDE", "S", "LN", new String[] {"IDE"}),
     LN_SUPL ("LabNetworks supplier", "SUPL", "S", "LN", null);
@@ -245,9 +246,9 @@ public enum ReaxysDataTypes {
 	}
 	
 	/**
-	 * get the item by name
+	 * get the item by code
 	 * 
-	 * @param name name of the item to get
+	 * @param name code of the item to get
 	 * @return ReaxysDataTypes object
 	 */
 	public static ReaxysDataTypes getByCode(final String name) {
@@ -260,7 +261,25 @@ public enum ReaxysDataTypes {
 
 		return null;
 	}
-	
+
+	/**
+	 * get the item by code and database
+	 * 
+	 * @param code code of the item to get
+	 * @param dbcode database code of the item to get (e.g. RX, RC, PU)
+	 * @return ReaxysDataTypes object
+	 */
+	public static ReaxysDataTypes getByCodeAndDatabase(final String code, final String dbcode) {
+		
+		for (final ReaxysDataTypes rdt : ReaxysDataTypes.values()) {
+			if (rdt.getCode().equals(code) && rdt.getDatabase().equals(dbcode)) {
+				return rdt;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * lookup an enum element by its description. Return null if the description 
 	 * does not match an element.

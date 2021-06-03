@@ -740,10 +740,6 @@ public class ReaxysLookupNodeDialog extends DefaultNodeSettingsPane implements A
 		l.add(new Node("EMolecules Link: IDE.LINK"));
 		m.add(l);
 		
-		l = new Node("LabNetwork");	
-		l.add(new Node("LabNetwork Compound ID: IDE.LNID"));
-		m.add(l);
-		
 		l = new Node("SigmaAldrich");	
 		l.add(new Node("SigmaAldrich Compound ID: IDE.SAID"));
 		m.add(l);

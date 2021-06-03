@@ -174,17 +174,13 @@ public enum ReaxysDataTypes {
 	UV ("UV/VIS Spectroscopy", "UV", "S", "RX", new String[] {"IDE"}),
 	VP ("Vapour Pressure", "VP", "S", "RX", new String[] {"IDE"}),
     RC ("Commercial Substances", "IDE", "S", "RC", new String[] {"IDE"}),
-    RC_YY ("Commercial Substances (incl. structures)", "IDE", "S", "RC", new String[] {"IDE", "YY"}),
     PROD ("Commercial Substances Supplier Information", "PROD", "S", "RC", new String[] {"IDE"}),
 	SNR ("Commercial Substances Supplier Number", "SNR", "S", "RC", new String[] {"PROD", "IDE"}),
 	ZIT ("Supplier/vendor", "ZIT", "S", "RX", new String[] {"IDE"}),
 	PC ("PubChem", "IDE", "S", "PU", new String[] {"IDE"}),
-	PC_YY ("PubChem (incl. structures)", "IDE", "S", "PU", new String[] {"IDE", "YY"}),
     SA ("SigmaAldrich", "IDE", "S", "SA", new String[] {"IDE"}),
-    SA_YY ("SigmaAldrich (incl. structures)", "IDE", "S", "SA", new String[] {"IDE", "YY"}),
     SA_SUPL ("SigmaAldrich supplier", "SUPL", "S", "SA", null),
 	EM ("E-molecules", "IDE", "S", "EM", new String[] {"IDE"}),
-	EM_YY ("E-molecules (incl. structures)", "IDE", "S", "EM", new String[] {"IDE", "YY"}),
 	SUPL ("E-molecules supplier", "SUPL", "S", "EM", null);
 
 	private String description;

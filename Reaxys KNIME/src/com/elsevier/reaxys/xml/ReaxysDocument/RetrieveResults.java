@@ -1,6 +1,7 @@
 package com.elsevier.reaxys.xml.ReaxysDocument;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -187,7 +188,7 @@ public class RetrieveResults extends ReaxysDocument {
 	 * @return Document with query to retrieve values.
 	 */
 	public Document retrieveValues(final String value, ReaxysDataTypes type,
-			final int first, final int last) {
+			final int first, final int last, boolean addStructures) {
 
 		assert  (last - first) < 100: "Number of values requested greater than 100";
 
@@ -221,12 +222,22 @@ public class RetrieveResults extends ReaxysDocument {
 			final ReaxysDataTypes rdt = ReaxysDataTypes.getByCodeAndDatabase(prefix, type.getDatabase());
 			
 			String[] extra = null;
+			ArrayList<String> extralist = new ArrayList<String>();
+			
 			if (rdt != null ) {
 				extra = rdt.getAssociatedTypes();
+				if (extra != null) {
+					Collections.addAll(extralist, extra);
+				}
 			}
 			
-			if (extra != null) {
-				for (String dataType : extra) {
+			// Add YY fact for databases other than RX if structures are to be added
+			if ((!type.getDatabase().equals("RX")) && addStructures) {
+				extralist.add("YY");
+			}
+									
+			if (!extralist.isEmpty()) {
+				for (String dataType : extralist) {
 					createElement(retrievalQuery, "select_list", "select_item");
 					/*
 					 * these are 'main data types', not facts.

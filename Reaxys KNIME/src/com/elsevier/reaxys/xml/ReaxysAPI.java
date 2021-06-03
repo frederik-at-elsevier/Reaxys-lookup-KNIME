@@ -157,12 +157,14 @@ public class ReaxysAPI {
 			List<HashMap<String, String>> result;
 			
 			if (useSampling) {
-				result =  getFactSampling(idField, id, query, dataType, min, max, sd_v3, sortString);
+				result =  getFactSampling(idField, id, query, dataType, min, max, sd_v3, sortString, addStructures);
 			} else {
-				result =  getFactComplete(idField, id, query, dataType, min, max, sd_v3, sortString);
+				result =  getFactComplete(idField, id, query, dataType, min, max, sd_v3, sortString, addStructures);
 			}
 			
-			if (addStructures) {
+			// For databases other than RX, the fact YY is simply added to the facts to be retured,
+			// so only needed for the RX database
+			if (addStructures && dataType.getDatabase().equals("RX")) {
 				result = addStructures(result, sd_v3);
 			}
 			
@@ -300,7 +302,7 @@ public class ReaxysAPI {
 	 */
 	final public List<HashMap<String, String>> getFactComplete(final String idField,
 			final String id, final String query, final ReaxysDataTypes dataType, int minResult, int maxResults, 
-			boolean sd_v3, String sortString) throws Exception  {
+			boolean sd_v3, String sortString, boolean addStructures) throws Exception  {
 		
 		/*
 		 * storage for results
@@ -361,7 +363,7 @@ public class ReaxysAPI {
 				if (exec != null) exec.getProgressMonitor().setProgress(msg1);
 
 				final Document request = retrieveResults.retrieveValues(queryRange, dataType, i,
-						i + RESULT_INCREMENT - 1);
+						i + RESULT_INCREMENT - 1, addStructures);
 				
 				// increment start value by RESULT_CHUNK
 				start += RESULT_CHUNK;
@@ -446,7 +448,7 @@ public class ReaxysAPI {
 	 */
 	final public List<HashMap<String, String>> getFactSampling(final String idField,
 			final String id, final String query, final ReaxysDataTypes dataType, 
-			int minResult, int maxResults, boolean sd_v3, String sortString) throws Exception  {
+			int minResult, int maxResults, boolean sd_v3, String sortString, boolean addStructures) throws Exception  {
 		
 		if (exec != null) exec.getProgressMonitor().setMessage("executing search...");
 
@@ -521,7 +523,7 @@ public class ReaxysAPI {
 				if (exec != null) exec.getProgressMonitor().setProgress(msg1);
 
 				final Document request = retrieveResults.retrieveValues(queryRange, dataType, i, 
-						i + SAMPLE_SIZE - 1);
+						i + SAMPLE_SIZE - 1, addStructures);
 				
 				final Document resultDocument = reaxysDocumentFactory.request(request);
 				
@@ -621,6 +623,8 @@ public class ReaxysAPI {
 	 * this performs a series of "batch" xrn searches. The batches are created to avoid
 	 * creating one very long query that can crash the server.
 	 * 
+	 * This is only applicable for the RX database
+	 * 
 	 * @param results   data results of normal serach to be augmented.
 	 * @param v3   true if v3000 structures should be retrieved
 	 * @param dataType molecule or reaction
@@ -704,7 +708,7 @@ public class ReaxysAPI {
 			ReaxysDataTypes queryDataType = dataType;
 			
 			final List<HashMap<String, String>> temp =  new ReaxysAPI(this)
-				.getFactComplete("", "", ideQuery, queryDataType, 1, Integer.MAX_VALUE, v3, null);
+				.getFactComplete("", "", ideQuery, queryDataType, 1, Integer.MAX_VALUE, v3, null, false);
 			
 			if (temp.size() > 0) {
 				structureData.addAll(temp);

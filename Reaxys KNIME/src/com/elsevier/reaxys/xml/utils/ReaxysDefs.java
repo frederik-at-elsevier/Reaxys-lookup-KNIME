@@ -5,6 +5,7 @@ package com.elsevier.reaxys.xml.utils;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +23,8 @@ import java.util.jar.Manifest;
  */
 public final class ReaxysDefs {
 	
-	private static final String UNKNOWN = "31 March 2021 14:50 CEST";
+	private static final String UNKNOWN_VERSION = "unknown";
+	private static final String UNKNOWN_DATE = "19700101.0000 UTC";
 
 
 	/**
@@ -78,8 +80,29 @@ public final class ReaxysDefs {
 		}
 	}
 	
+/**
+ * Gets the last modified time from an entry in the jar file
+ * @param jarEntry the path to the entry in the jar file
+ * @return the last modified Date or null in case of error
+ */
+	private static Date getLastModified(String jarEntry) {
+		Date lastModified = null;
+		try {
+			JarFile jar = new JarFile(getJarFile(ReaxysDefs.class));
+			try {
+				FileTime lastmod = jar.getEntry(jarEntry).getLastModifiedTime();
+				lastModified = new Date(lastmod.toMillis());
+			} finally {
+				jar.close();
+			}
+		} catch (Exception e) {
+			// Do nothing
+		}
+		return lastModified;
+	}
+	
 	/**
-	 * Gets the svn version string from the jar Manifest
+	 * Gets the Bundle version string from the jar Manifest
 	 * 
 	 * @return the version String
 	 */
@@ -87,15 +110,15 @@ public final class ReaxysDefs {
 		
 		File jarFile = getJarFile(ReaxysDefs.class);
 		if (jarFile == null) {
-			return UNKNOWN;
+			return UNKNOWN_VERSION;
 		}
 		Manifest manifest = getManifest(jarFile);
 		if (manifest == null) {
-			return UNKNOWN;
+			return UNKNOWN_VERSION;
 		}
-		String version = manifest.getMainAttributes().getValue("Sources-Version");
+		String version = manifest.getMainAttributes().getValue("Bundle-Version");
 		if (version == null) {
-			version = UNKNOWN;
+			version = UNKNOWN_VERSION;
 		} else { 
 			// Only get the major number from the version string
 			version = version.split("[MS:]")[0];
@@ -110,32 +133,16 @@ public final class ReaxysDefs {
 	 */
 	public static String getBuildDateTime() {
 		
-		String dateString = UNKNOWN;
-		File jarFile = getJarFile(ReaxysDefs.class);
-		if (jarFile == null) {
-			return UNKNOWN;
-		}
-		Manifest manifest = getManifest(jarFile);
-		if (manifest == null) {
-			return UNKNOWN;
-		}
-		String buildTimeString = manifest.getMainAttributes().getValue("Build-Time");
-		if (buildTimeString == null) {
-			buildTimeString = new Date().toString();
-		}
+		String dateString = UNKNOWN_DATE;
 		
-		// Date format as defined in build.xml for Manifest
-		SimpleDateFormat mfDateFormat = new SimpleDateFormat("dd MMMMM yyyy, HH:mm Z", new Locale("en","UK"));
+		Date lastModifiedDate = getLastModified("plugin.xml");
 		
-		// Date format for version string (and use UTC for the time zone)
-		SimpleDateFormat versionDateFormat = new SimpleDateFormat("yyyyMMdd.HHmm", new Locale("en","UK"));
-		versionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		
-		try {
-			Date buildDate = mfDateFormat.parse(buildTimeString);
-			dateString = versionDateFormat.format(buildDate);
-		} catch (ParseException e) {
-			return UNKNOWN;
+		if (lastModifiedDate !=null) {
+			// Date format for version string (and use UTC for the time zone)
+			SimpleDateFormat versionDateFormat = new SimpleDateFormat("yyyyMMdd.HHmm", new Locale("en","UK"));
+			versionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+			dateString = versionDateFormat.format(lastModifiedDate);
 		}
 		
 		return dateString;

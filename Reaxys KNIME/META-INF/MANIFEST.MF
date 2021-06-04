@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Reaxys Lookup
 Bundle-SymbolicName: com.elsevier.reaxyslookup;singleton:=true
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.6
 Bundle-Activator: com.elsevier.reaxys.ReaxysLookupNodePlugin
 Bundle-Vendor: Elsevier Professional Services
 Require-Bundle: org.knime.workbench.core,
